@@ -5,14 +5,14 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-wide',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold ring-offset-slate-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-wide',
   {
     variants: {
       variant: {
         default:
           'bg-white text-black border-slate-200 border-2 border-b-4 active:border-b-2 hover:bg-slate-100 hover:text-slate-500',
         primary:
-          'bg-sky-400 text-primary-foreground hover:bg-sky-500/90 border-sky-500 border-b-4 active:border-b-0',
+          'bg-sky-800 text-slate-100 hover:bg-sky-600/70 border-slate-700 border-b-4 active:border-b-0',
         primaryOutline:
           'bg-white text-sky-500 hover:bg-slate-200 border-sky-300 border-b active:border-b-0',
         secondary:
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         danger:
           'bg-rose-500 text-primary-foreground hover:bg-rose-500/90 border-rose-600 border-b-4 active:border-b-0',
         dangerOutline:
-          'bg-white text-rose-500 hover:bg-slate-200 border-sky-300 border-b active:border-b-0',
+          'bg-slate-800 text-rose-500 hover:bg-slate-700/60 border-rose-600 border-b-2 active:border-b-0',
         super:
           'bg-indigo-500 text-primary-foreground hover:bg-indigo-500/90 border-indigo-600 border-b-4 active:border-b-0',
         superOutline:
@@ -33,6 +33,8 @@ const buttonVariants = cva(
           'bg-transparent text-slate-500 hover:bg-slate-700 border-transparent border-2 transition-none',
         sidebarOutline:
           'bg-sky-500/15 text-sky-500 hover:bg-sky-500/20   transition-none', //border-sky-300 border-2 active:border-b-0
+        locked:
+          'bg-neutral-800 text-primary-foreground hover:bg-neutral-800/90 border-neutral-700 border-b-4 active:border-b-0',
       },
       size: {
         default: 'h-11 px-4 py-2',
