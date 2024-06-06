@@ -17,7 +17,7 @@ import { useExitModal } from '@/store/use-exit-modal';
 
 type Props = {};
 
-export const ExitModale = (props: Props) => {
+export const ExitModal = (props: Props) => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const { open, close, isOpen } = useExitModal();
@@ -32,7 +32,7 @@ export const ExitModale = (props: Props) => {
         <DialogHeader>
           <div className="flex items-center justify-center  mb-5">
             <Image
-              src="/images/mascut_sad.svg"
+              src="/images/mascot_sad.svg"
               alt="sad"
               width={80}
               height={80}

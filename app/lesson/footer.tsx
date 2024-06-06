@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 type FooterProps = {
   disabled?: boolean;
-  lessonId?: boolean;
+  lessonId?: number | string;
   status: 'correct' | 'wrong' | 'none' | 'completed';
   onCheck: () => void;
 };
@@ -24,13 +24,13 @@ export const Footer = ({
   return (
     <footer
       className={cn(
-        'h-[0px] lg:h-[120px]  border-t-2 border-slate-700',
+        'h-[0px] lg:h-[120px]  border-t-2 border-slate-700 pt-8 lg:pt-0',
         status === 'correct' &&
           'border border-t-8 border-green-700/95 rounded-xl',
         status === 'wrong' && 'border border-t-8 border-rose-700/95 rounded-xl'
       )}
     >
-      <div className="max-w-[1140px] h-full mx-auto flex items-center justify-between px-6 lg:px-12 ">
+      <div className="max-w-[1140px] h-full mx-auto gap-x-3 flex items-center justify-between px-6 lg:px-12 ">
         {status === 'correct' && (
           <div className="text-green-600 font-bold text-base lg:text-2xl flex items-center">
             <CheckCircle className="h-6 w-6 lg:h-10 lg:w-10 lg:mr-4 mr-4" />

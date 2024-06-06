@@ -4,7 +4,9 @@ import { cn } from '@/lib/utils';
 import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
-import { ExitModale } from '@/components/modals/exit-modal';
+import { ExitModal } from '@/components/modals/exit-modal';
+import { HeartsModal } from '@/components/modals/hearts-modal';
+import { PracticeModal } from '@/components/modals/practice-modal';
 
 const font = Nunito({ subsets: ['latin'] });
 
@@ -23,7 +25,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={cn('bg-slate-900 text-slate-50', font.className)}>
           <Toaster position="top-center" richColors />
-          <ExitModale />
+          <PracticeModal />
+          <HeartsModal />
+          <ExitModal />
           {children}
         </body>
       </html>

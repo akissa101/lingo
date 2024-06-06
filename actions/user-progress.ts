@@ -6,13 +6,19 @@ import { and, eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 
 import db from '@/db/drizzle';
-import { getCourseById, getUserProgress } from '@/db/queries';
+import {
+  getCourseById,
+  getUserProgress,
+  getUserSubscription,
+} from '@/db/queries';
 import { challengeProgress, challenges, userProgress } from '@/db/schema';
+import { useCustomCompareEffect } from 'react-use';
+import { POINTS_TO_REFIL } from '@/constants';
 
 export const upsertUserProgress = async (courseId: number) => {
   const { userId } = await auth();
-  const user = await currentUser();
-  if (!userId || !user) {
+  const cUser = await currentUser();
+  if (!userId || !cUser) {
     throw new Error('Unauthorized');
   }
 
@@ -29,8 +35,8 @@ export const upsertUserProgress = async (courseId: number) => {
   if (existingUserProgress) {
     await db.update(userProgress).set({
       activeCourseId: courseId,
-      userName: user.firstName || 'user',
-      UserImageSrc: user.imageUrl || '/images/logo.svg',
+      userName: cUser.firstName || 'user',
+      userImageSrc: cUser.imageUrl || '/images/logo.svg',
     });
     revalidatePath('/courses');
     revalidatePath('/learn');
@@ -39,8 +45,8 @@ export const upsertUserProgress = async (courseId: number) => {
   await db.insert(userProgress).values({
     userId,
     activeCourseId: courseId,
-    userName: user.firstName || 'user',
-    UserImageSrc: user.imageUrl || '/images/logo.svg',
+    userName: cUser.firstName || 'user',
+    userImageSrc: cUser.imageUrl,
   });
   revalidatePath('/courses');
   revalidatePath('/learn');
@@ -54,7 +60,7 @@ export const reduceHearts = async (challengeId: number) => {
   }
 
   const currentUserProgress = await getUserProgress();
-  // TODO get user subscrtioption
+  const userSubscription = await getUserSubscription();
 
   // console.log('currentUserProgress:', currentUserProgress);
 
@@ -85,7 +91,9 @@ export const reduceHearts = async (challengeId: number) => {
     throw new Error('User progress not found');
   }
 
-  //TODO handle subscription
+  if (userSubscription?.isActive) {
+    return { error: 'subscription' };
+  }
 
   if (currentUserProgress.hearts === 0) {
     return { error: 'hearts' };
@@ -103,4 +111,31 @@ export const reduceHearts = async (challengeId: number) => {
   revalidatePath('/quesst');
   revalidatePath('/leaderboard');
   revalidatePath(`/lesson/${lessonId}`);
+};
+
+export const refillHearts = async () => {
+  const currentUserProgress = await getUserProgress();
+
+  if (!currentUserProgress) {
+    throw new Error('Current user progress not found');
+  }
+  if (currentUserProgress.hearts === 5) {
+    throw new Error('Hearts are already full');
+  }
+
+  if (currentUserProgress.points < POINTS_TO_REFIL) {
+    throw new Error('Not enought points');
+  }
+  await db
+    .update(userProgress)
+    .set({
+      hearts: 5,
+      points: currentUserProgress?.points - POINTS_TO_REFIL,
+    })
+    .where(eq(userProgress.userId, currentUserProgress.userId));
+
+  revalidatePath('/shop');
+  revalidatePath('/learn');
+  revalidatePath('/quesst');
+  revalidatePath('/leaderboard');
 };

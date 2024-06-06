@@ -18,6 +18,7 @@ const main = async () => {
     await db.delete(schema.challenges);
     await db.delete(schema.challengeOptions);
     await db.delete(schema.challengeProgress);
+    await db.delete(schema.userSubscription);
 
     await db.insert(schema.courses).values([
       {
@@ -107,6 +108,27 @@ const main = async () => {
         question: 'How to spell boy?',
         order: 3,
       },
+      {
+        id: 4,
+        lessonId: 2,
+        type: 'SELECT',
+        question: 'Which one of these is the "man"?',
+        order: 1,
+      },
+      {
+        id: 5,
+        lessonId: 2,
+        type: 'ASSIST',
+        question: 'How to spell woman?',
+        order: 2,
+      },
+      {
+        id: 6,
+        lessonId: 2,
+        type: 'SELECT',
+        question: 'How to spell boy?',
+        order: 3,
+      },
     ]);
 
     await db.insert(schema.challengeOptions).values([
@@ -124,7 +146,7 @@ const main = async () => {
         imageSrc: '/images/woman.svg',
         correct: false,
         text: 'إمرأة',
-        audioSrc: '/audio/ar_woman.m4a',
+        audioSrc: '/audio/ar_woman.mp3',
       },
       {
         id: 3,
@@ -132,7 +154,7 @@ const main = async () => {
         imageSrc: '/images/boy.svg',
         correct: false,
         text: 'ولد',
-        audioSrc: '/audio/ar_boy.m4a',
+        audioSrc: '/audio/ar_boy.mp3',
       },
       {
         id: 4,
@@ -148,7 +170,7 @@ const main = async () => {
         // imageSrc: '/images/woman.svg',
         correct: true,
         text: 'إمرأة',
-        audioSrc: '/audio/ar_woman.m4a',
+        audioSrc: '/audio/ar_woman.mp3',
       },
       {
         id: 6,
@@ -156,7 +178,7 @@ const main = async () => {
         // imageSrc: '/images/woman.svg',
         correct: false,
         text: 'ولد',
-        audioSrc: '/audio/ar_boy.m4a',
+        audioSrc: '/audio/ar_boy.mp3',
       },
       {
         id: 7,
@@ -172,7 +194,7 @@ const main = async () => {
         imageSrc: '/images/woman.svg',
         correct: false,
         text: 'إمرأة',
-        audioSrc: '/audio/ar_woman.m4a',
+        audioSrc: '/audio/ar_woman.mp3',
       },
       {
         id: 9,
@@ -180,7 +202,7 @@ const main = async () => {
         imageSrc: '/images/boy.svg',
         correct: true,
         text: 'ولد',
-        audioSrc: '/audio/ar_boy.m4a',
+        audioSrc: '/audio/ar_boy.mp3',
       },
     ]);
 
